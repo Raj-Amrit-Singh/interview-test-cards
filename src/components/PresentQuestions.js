@@ -26,7 +26,11 @@ export class PresentQuestions extends React.Component {
     //myStyle.selectedButtonStyle.backgroundColor = this.state.color;
     for (let i = 1; i <= 20; i++) {
       this.buttonElements.push(
-        <button id={i} key={i} onClick={() => this.selectQuestion(i)} className="btn btn-md btn-default" style={myStyle.selectedButtonStyle}>{i}</button>
+        <div className="btn-group">
+          
+        <button  className="btn btn-primary" id={i} key={i} onClick={() => this.selectQuestion(i)} className="btn btn-primary" >{i}</button>
+        &nbsp;
+        </div>
       )
     }
   }
@@ -89,34 +93,52 @@ export class PresentQuestions extends React.Component {
     let myValue = (tempState * 4);
     let currentStatus = this.qBank[tempState];
     return (
-      <div className="card bg-light text-dark" style={myStyle.cardStyle} >
-        <div className="card-header" style={myStyle.headerStyle}>{currentStatus.Question__c}</div>
-        <div className="card-body" style={myStyle.bodyStyle}>
+      <div className="row margin-40 " >
+      <div className="col-sm-12 col-sm-offset-1 text-absolute" style={{
+    top:"-16px"}}>
+        <h1 className="white text-center">Aptitude Test</h1>
+        <hr ></hr>
+      <div className="panel-group well well-lg">
+     {/*  <div className="panel panel-default" > */}
+        <div className="panel-heading " >Qusetion - " {currentStatus.Question__c } "</div>
+        <div className="panel-body" >
           <div className="radio">
-            <label><input type="radio" name={tempState} value={myValue + 1} checked={this.toCheck(myValue + 1)} onChange={() => this.onButtonChange(myValue + 1, currentStatus.Id, currentStatus.Options__c.option1)} />
-              {currentStatus.Options__c.option1}
-            </label>
-            <label style={{ marginLeft: "387px" }}>
-              <input type="radio" name={tempState} value={myValue + 2} checked={this.toCheck(myValue + 2)} onChange={() => this.onButtonChange(myValue + 2, currentStatus.Id, currentStatus.Options__c.option2)} />
-              {currentStatus.Options__c.option2}
-            </label><br />
-            <label><input type="radio" name={tempState} value={myValue + 3} checked={this.toCheck(myValue + 3)} onChange={() => this.onButtonChange(myValue + 3, currentStatus.Id, currentStatus.Options__c.option3)} />
-              {currentStatus.Options__c.option3}
-            </label>
-            <label style={{ marginLeft: "387px" }}>
-              <input type="radio" name={tempState} value={myValue + 4} checked={this.toCheck(myValue + 4)} onChange={() => this.onButtonChange(myValue + 4, currentStatus.Id, currentStatus.Options__c.option4)} />
-              {currentStatus.Options__c.option4}
-            </label>
+          <table> 
+            <tr>
+            <td><label><input type="radio" style={{position: "inherit"}} name={tempState} value={myValue + 1} checked={this.toCheck(myValue + 1)} onChange={() => this.onButtonChange(myValue + 1, currentStatus.Id, currentStatus.Options__c.option1)} />
+             &nbsp; {currentStatus.Options__c.option1}
+            </label></td>
+
+            <td><label style={{ marginLeft: "387px" }}>
+              <input type="radio" style={{position: "inherit"}} name={tempState} value={myValue + 2} checked={this.toCheck(myValue + 2)} onChange={() => this.onButtonChange(myValue + 2, currentStatus.Id, currentStatus.Options__c.option2)} />
+              &nbsp; {currentStatus.Options__c.option2}
+            </label></td></tr>
+            <tr> <td><label><input type="radio" style={{position: "inherit"}} name={tempState} value={myValue + 3} checked={this.toCheck(myValue + 3)} onChange={() => this.onButtonChange(myValue + 3, currentStatus.Id, currentStatus.Options__c.option3)} />
+            &nbsp; {currentStatus.Options__c.option3}
+            </label></td>
+            <td><label style={{ marginLeft: "387px" }}>
+              <input type="radio" name={tempState} style={{position: "inherit"}} value={myValue + 4} checked={this.toCheck(myValue + 4)} onChange={() => this.onButtonChange(myValue + 4, currentStatus.Id, currentStatus.Options__c.option4)} />
+              &nbsp; {currentStatus.Options__c.option4}
+            </label></td></tr>
+            </table>
           </div>
         </div>
-        <span className="inline" style={myStyle.buttonElements}>
+        <hr className="hrLine"></hr>
+        <div className="btn-group " >
+        &nbsp;
+        <span className="inline">
+
           {this.buttonElements}
         </span>
-        <div className="card-footer" style={myStyle.footerStyle}><br />
-          <button className="btn btn-default" style={myStyle.footerButtonLeft} onClick={this.prevQuestion}>Previous</button>
-          <button className="btn btn-default" style={myStyle.footerButtonRight} onClick={this.nextQuestion}>Next</button>
         </div>
+        &nbsp;
+          <button className="previous round" onClick={this.prevQuestion}>Prev</button>
+          <button className="next round"  onClick={this.nextQuestion}>Next</button>
+         
       </div>
+      </div>
+      </div>
+    /*   </div> */
     );
   }
 }

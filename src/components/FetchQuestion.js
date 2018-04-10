@@ -35,7 +35,7 @@ export class FetchQuestion extends React.Component {
   fetchQuestion() {
     let that = this; 
     var xhttp = new XMLHttpRequest();
-    var token = '00D7F000005Bog7!AREAQArmFe52IaP0Iwl8Wcr04y2VqDpRaZcj4wCGx_eLpXtgISscRhC2b0g4AyfD4ihCxm3012j3c8Mp1_HYXcYI1jS5RcKa';
+    var token = '00D7F000005Bog7!AREAQCZKsBUUjuxMXC3gMCUICA95aNkNZybESk5VA1Hg35htqMzgO37eqL3prgqUPib1CR.2ubujeVZ6kslSFYyhQ_pz_QU0';
     var jsonObject;
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {

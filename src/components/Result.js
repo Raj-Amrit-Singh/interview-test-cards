@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 export function Result (props){
-  
   return(
     <section id="pricing" className="pad-lg">
       <div className="container" >

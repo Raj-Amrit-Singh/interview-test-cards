@@ -3,10 +3,10 @@ import React from 'react'
 export function Instructions(props) {
   return (
     <section id="pricing" className="pad-lg">
-      <div class="container">
-        <div class="row margin-40">
-          <div class="col-sm-8 col-sm-offset-2 text-absolute">
-            <h1 class="white text-center">Aptitude Test</h1>
+      <div className="container">
+        <div className="row margin-40">
+          <div className="col-sm-8 col-sm-offset-2 text-absolute">
+            <h1 className="white text-center">Aptitude Test</h1>
             <hr></hr>
             <h2>Instructions</h2>
             <h3>(Please read all instructions carefully.)</h3>

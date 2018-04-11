@@ -82,30 +82,26 @@ export class PresentQuestions extends React.Component {
   }
 
   onButtonChange(value, id, answer) {
-    console.log("button change");
     let tempArray = this.state.currentButton;
     tempArray.push(value);
     this.setState((prevState) => ({
       currentButton: tempArray,
     }));
     this.answerStore(id, answer);
-    console.log(this.state.currentButton);
   }
 
   componentWillMount() {
     this.createButtons();
-   /*  this.fetchURL(); */
+    /*  this.fetchURL(); */
   }
 
   toCheck(value) {
     let checkResult;
     let tempArray = this.state.currentButton;
-    console.log(this.state.currentButton);
     if ((tempArray.indexOf(value)) >= 0) {
       checkResult = true;
     }
     else checkResult = false;
-    console.log(checkResult);
     return checkResult;
   }
 
@@ -115,7 +111,7 @@ export class PresentQuestions extends React.Component {
     let currentStatus = this.qBank[tempState];
     return (
       <div className="row margin-40 " >
-      
+
         <div className="col-sm-12 col-sm-offset-1 text-absolute" style={{
           top: "-16px"
         }}>

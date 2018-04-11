@@ -5,17 +5,19 @@ import { PresentQuestions } from './PresentQuestions'
 import { Result } from './Result'
 import { TimerComponent } from './TimerComponent'
 
-
 export class Questions extends React.Component {
   constructor(props) {
     super(props);
     this.answerKey = [];
     this.array = [];
     this.Qbank = [];
+    this.Sid = props.Sid;
+    this.Cid = props.Cid;
     this.createRandomQuestion = this.createRandomQuestion.bind(this);
     this.answerStore = this.answerStore.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.shouldReplaceAnswer = this.shouldReplaceAnswer.bind(this);
+    this.postResult = this.postResult.bind(this);
     this.state = {
       Qbank_Check: props.Data,
       counter: null,
@@ -52,61 +54,60 @@ export class Questions extends React.Component {
       }
     });
     this.setState({ counter: count });
+    this.postResult();
   }
 
-  /*postResult(){
-    fetch("https://brave-goat-271242-dev-ed.my.salesforce.com/services/apexrest/Result_in_Feedback",
-    {
+  postResult() {
+    fetch("https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/ResultRestHandler",
+      {
         headers: {
-          'Authorization': 'Bearer 00D7F000002D9vK!AQgAQBjxepa8Ol9SF0C1tqV4y2eHZI2JLtGgPL4M1PiyyNanSNkZJo9cg7YSiYhdQxkCoLtPJ507Gj2rgr6gP2ZFEVLXDkFT',
+          'Authorization': 'Bearer '+this.Sid,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin':'http://localhost:9000'
+          'Access-Control-Allow-Origin': 'http://localhost:9000'
         },
         method: "POST",
-        body: JSON.stringify({ result: this.state.counter })
-    })
-    .then(function(res){ console.log(res) })
-    .catch(function(res){ console.log(res) })
-
-  //  alert("Post is been made "+this.state.counter)
-  }*/
-
-  answerStore(id, answer) {
-    let shouldReplace = this.shouldReplaceAnswer(id);
-    if (!shouldReplace) {
-      let temp = {};
-      temp.id = id;
-      temp.answer = answer;
-      this.answerKey.push(temp);
-    }
-    else {
-      shouldReplace.answer = answer;
-    }
+        body: JSON.stringify({ CandidateId : this.Cid,result: this.state.counter })
+      })
+      .then(function (res) { })
+      .catch(function (res) { })
   }
 
-  shouldReplaceAnswer(id) {
-    let tempElement = this.answerKey.find((element) => {
-      return element.id == id;
-    })
-    return tempElement;
+answerStore(id, answer) {
+  let shouldReplace = this.shouldReplaceAnswer(id);
+  if (!shouldReplace) {
+    let temp = {};
+    temp.id = id;
+    temp.answer = answer;
+    this.answerKey.push(temp);
   }
+  else {
+    shouldReplace.answer = answer;
+  }
+}
 
-  render(props) {
-    { this.createRandomQuestion() }
-    if (this.state.counter != null) {
-      return <Result correctAnswers={this.state.counter} />
-    }
-    return (
-      <div>
-        <TimerComponent triggerParentUpdate={this.checkAnswer} style={{position:'fixed'}}/>
-        <p style={{paddingLeft : "129px",position:'fixed'}}><img  src="http://incapsulate.com/wp-content/themes/build/assets/img/logo.svg" width="150px" height="70px"/></p>
-        <br/><br/><br/>
-        <hr className="hrGreen"/>
-        <div className="container">
+shouldReplaceAnswer(id) {
+  let tempElement = this.answerKey.find((element) => {
+    return element.id == id;
+  })
+  return tempElement;
+}
+
+render(props) {
+  { this.createRandomQuestion() }
+  if (this.state.counter != null) {
+    return <Result correctAnswers={this.state.counter} />
+  }
+  return (
+    <div>
+      <TimerComponent triggerParentUpdate={this.checkAnswer} style={{ position: 'fixed' }} />
+      <p style={{ paddingLeft: "129px", position: 'fixed' }}><img src="http://incapsulate.com/wp-content/themes/build/assets/img/logo.svg" width="150px" height="70px" /></p>
+      <br /><br /><br />
+      <hr className="hrGreen" />
+      <div className="container">
         <PresentQuestions Qbank={this.Qbank} answerStore={this.answerStore} />
         <OnSubmit checkAnswer={this.checkAnswer.bind(this)} />
-        </div>
-      </div >
-    );
-  }
+      </div>
+    </div >
+  );
+}
 }

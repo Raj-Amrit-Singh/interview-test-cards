@@ -52,7 +52,6 @@ class datePicker extends React.Component {
 
     checkSchedule() {
         let schedule = this.state.candidateSchedule.Date_And_Time__c;
-        console.log(schedule);     //This is the schedule of candidate
         let temp = schedule.split('T');
         let date = temp[0];     //This is the date of candidate
         temp = temp[1]
@@ -62,8 +61,6 @@ class datePicker extends React.Component {
         temp = today.split('GMT');
         today = new Date(temp[0]);
         let candDate = new Date(`${date} ${time}`);
-        console.log(candDate);
-        console.log(today);
         this.checkDate(today, candDate);
         if (this.state.flag != 0) {
             this.checkTime(today, candDate);

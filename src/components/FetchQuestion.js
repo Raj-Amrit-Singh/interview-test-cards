@@ -9,6 +9,8 @@ export class FetchQuestion extends React.Component {
     this.qBankData = [];
     this.fetchQuestion = this.fetchQuestion.bind(this);
     this.setQuestion = this.setQuestion.bind(this);
+    this.Sid = props.Sid;
+    this.Cid = props.Cid;
     this.state = {
       questionSet: {},
       answerSet: [],
@@ -35,7 +37,7 @@ export class FetchQuestion extends React.Component {
   fetchQuestion() {
     let that = this; 
     var xhttp = new XMLHttpRequest();
-    var token = '00D7F000005Bog7!AREAQCZKsBUUjuxMXC3gMCUICA95aNkNZybESk5VA1Hg35htqMzgO37eqL3prgqUPib1CR.2ubujeVZ6kslSFYyhQ_pz_QU0';
+    var token = this.Sid;
     var jsonObject;
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
@@ -61,7 +63,7 @@ export class FetchQuestion extends React.Component {
     else {
       return (
         <div>
-          <Questions Data={this.state.questionSet} Sid={props.Sid} Cid={props.Cid}/>
+          <Questions Data={this.state.questionSet} Sid={this.Sid} Cid={this.Cid}/>
         </div>
       )
     }

@@ -3,7 +3,6 @@ import { myStyle } from '../css/Card'
 import { parse } from 'qs';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import ReactDOM from 'react-dom';
-import UrlParms from './FetchingURLParms';
 
 
 export class PresentQuestions extends React.Component {

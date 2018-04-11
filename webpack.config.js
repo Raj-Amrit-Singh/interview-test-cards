@@ -22,7 +22,7 @@ module.exports = {
                 }
             }
         ]
-    },
+    }/* ,
 
      plugins: [
         new webpack.DefinePlugin({
@@ -38,5 +38,5 @@ module.exports = {
                 comments: false,
             },
         })
-    ]
+    ] */
 }

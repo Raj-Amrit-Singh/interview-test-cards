@@ -123,22 +123,24 @@ export class PresentQuestions extends React.Component {
             <div className="panel-body" >
               <div className="radio">
                 <table>
+                  <tbody>
                   <tr>
                     <td><label><input type="radio" style={{ position: "inherit" }} name={tempState} value={myValue + 1} checked={this.toCheck(myValue + 1)} onChange={() => this.onButtonChange(myValue + 1, currentStatus.Id, currentStatus.Options__c.option1)} />
-                      &nbsp; {currentStatus.Options__c.option1}
+                      <span style={{padding:"4px"}}> {currentStatus.Options__c.option1}</span>
                     </label></td>
 
                     <td><label style={{ marginLeft: "387px" }}>
                       <input type="radio" style={{ position: "inherit" }} name={tempState} value={myValue + 2} checked={this.toCheck(myValue + 2)} onChange={() => this.onButtonChange(myValue + 2, currentStatus.Id, currentStatus.Options__c.option2)} />
-                      &nbsp; {currentStatus.Options__c.option2}
+                      <span style={{padding:"4px"}}> {currentStatus.Options__c.option2}</span>
                     </label></td></tr>
-                  <tr> <td><label><input type="radio" style={{ position: "inherit" }} name={tempState} value={myValue + 3} checked={this.toCheck(myValue + 3)} onChange={() => this.onButtonChange(myValue + 3, currentStatus.Id, currentStatus.Options__c.option3)} />
-                    &nbsp; {currentStatus.Options__c.option3}
+                  <tr key={name}  > <td><label><input type="radio" style={{ position: "inherit" }} name={tempState} value={myValue + 3} checked={this.toCheck(myValue + 3)} onChange={() => this.onButtonChange(myValue + 3, currentStatus.Id, currentStatus.Options__c.option3)} />
+                  <span style={{padding:"4px"}}>{currentStatus.Options__c.option3}</span>
                   </label></td>
                     <td><label style={{ marginLeft: "387px" }}>
                       <input type="radio" name={tempState} style={{ position: "inherit" }} value={myValue + 4} checked={this.toCheck(myValue + 4)} onChange={() => this.onButtonChange(myValue + 4, currentStatus.Id, currentStatus.Options__c.option4)} />
-                      &nbsp; {currentStatus.Options__c.option4}
+                      <span style={{padding:"4px"}}> {currentStatus.Options__c.option4}</span>
                     </label></td></tr>
+                </tbody>
                 </table>
               </div>
             </div>

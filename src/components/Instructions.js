@@ -1,8 +1,14 @@
 import React from 'react'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import ReactDOM from 'react-dom';
+import UrlParms from './FetchingURLParms';
+import PresentQuestions from './PresentQuestions'
 
 export function Instructions(props) {
   return (
     <section id="pricing" className="pad-lg">
+   
+    
       <div className="container">
         <div className="row margin-40">
           <div className="col-sm-8 col-sm-offset-2 text-absolute">
@@ -38,6 +44,7 @@ export function Instructions(props) {
             </div>
           </div>
         </div>
+        
       </div>
     </section>
   )

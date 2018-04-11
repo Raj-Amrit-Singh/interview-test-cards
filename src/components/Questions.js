@@ -98,13 +98,13 @@ export class Questions extends React.Component {
     }
     return (
       <div>
-        <TimerComponent triggerParentUpdate={this.checkAnswer} style={{ position: 'fixed' }} />
-        <p style={{ paddingLeft: "129px", position: 'fixed' }}><img src="http://incapsulate.com/wp-content/themes/build/assets/img/logo.svg" width="150px" height="70px" /></p>
-        <br /><br /><br />
-        <hr className="hrGreen" />
+        <TimerComponent triggerParentUpdate={this.checkAnswer} style={{position:'fixed'}}/>
+        <p style={{paddingLeft : "129px",position:'fixed'}}><img  src="http://incapsulate.com/wp-content/themes/build/assets/img/logo.svg" width="150px" height="70px"/></p>
+        <br/><br/><br/>
+        <hr className="hrGreen"/>
         <div className="container">
-          <PresentQuestions Qbank={this.Qbank} answerStore={this.answerStore} />
-          <OnSubmit checkAnswer={this.checkAnswer.bind(this)} />
+        <PresentQuestions Qbank={this.Qbank} answerStore={this.answerStore} />
+        <OnSubmit checkAnswer={this.checkAnswer.bind(this)} />
         </div>
       </div >
     );

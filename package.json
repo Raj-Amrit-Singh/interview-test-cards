@@ -13,10 +13,12 @@
   "dependencies": {
     "create-react-class": "^15.5.2",
     "prop-types": "^15.5.8",
+    "qs": "^6.5.1",
     "query-string": "^6.0.0",
     "react": "^16.2.0",
     "react-countdown-clock": "^2.4.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "keywords": [
     "react-component",

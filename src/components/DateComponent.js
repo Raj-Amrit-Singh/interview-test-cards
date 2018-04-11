@@ -11,49 +11,99 @@ import queryString, { parseUrl } from 'query-string'
 class datePicker extends React.Component {
     constructor(props) {
         super(props);
-        this.date = new Date().toLocaleDateString();
-        this.temp = dateDemo.Date[0].ExamDate;       //Replace this with the date you get by fetching candidate id
+        this.canddate = null;
+        this.today = null;
         this.getUrl = null;
-        this.arrayDate = new Date(this.temp).toLocaleDateString();
         this.state = {
-             counter: 0,
-             candidateSchedule : {},            
-            };
+            counter: 0,
+            candidateSchedule: {},
+            dateFlag: null,
+        };
+        //this.state.dateFlag = null;
         this.startTest = this.startTest.bind(this);
         this.Cid = null;
         this.Sid = null;
-
+        this.checkSchedule = this.checkSchedule.bind(this);
+        this.checkDate = this.checkDate.bind(this);
+        this.checkTime = this.checkTime.bind(this);
     }
-
 
     fetchUrlParams() {
         const parsedURL = queryString.parseUrl(location.href);
-        console.log(parsedURL.query.Cid)
         this.Cid = parsedURL.query.Cid;
         this.Sid = parsedURL.query.Sid;
-        console.log(this.Cid + "  " + this.Sid)
-        var scheduleApi = `https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/CandidateScheduleRestHandler/${this.Cid}`;
-        let that = this; 
-        var xhttp = new XMLHttpRequest();
-        var token = this.Sid;
-        var jsonObject;
+        let scheduleApi = `https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/CandidateScheduleRestHandler/${this.Cid}`;
+        let that = this;
+        let xhttp = new XMLHttpRequest();
+        let token = this.Sid;
+        let jsonObject;
         xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            that.setState({
-                candidateSchedule : JSON.parse(this.responseText)
-            })
-        }
+            if (this.readyState == 4 && this.status == 200) {
+                that.setState({
+                    candidateSchedule: JSON.parse(this.responseText)
+                })
+                that.checkSchedule();
+            }
         };
         xhttp.open("GET", scheduleApi, true);
         xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
         xhttp.send();
     }
-    componentWillMount() {
 
-        this.fetchUrlParams();
-
+    checkSchedule() {
+        let schedule = this.state.candidateSchedule.Date_And_Time__c;
+        console.log(schedule);     //This is the schedule of candidate
+        let temp = schedule.split('T');
+        let date = temp[0];     //This is the date of candidate
+        temp = temp[1]
+        temp = temp.split('.');
+        let time = temp[0];     //This is the time of candidate
+        let today = new Date().toUTCString();
+        temp = today.split('GMT');
+        today = new Date(temp[0]);
+        let candDate = new Date(`${date} ${time}`);
+        console.log(candDate);
+        console.log(today);
+        this.checkDate(today, candDate);
+        if (this.state.flag != 0) {
+            this.checkTime(today, candDate);
+        }
     }
 
+    checkDate(today, candDate) {
+        if (today.getDate == candDate.getDate && today.getMonth == candDate.getMonth && today.getFullYear == candDate.getFullYear) {
+            this.setState({
+                dateFlag: 1
+            });
+        }
+        else {
+            this.setState({
+                dateFlag: 0
+            });
+        }
+    }
+
+    checkTime(today, candDate) {
+        let currentTime = Math.floor(today.getTime() / 1000);
+        let candTime = Math.floor(candDate.getTime() / 1000);
+        let timeDiff = Math.abs(candTime - currentTime);
+        timeDiff = timeDiff / 60;
+        if (timeDiff > 10) {
+            this.setState({
+                dateFlag: 2,
+            })
+        }
+        else {
+            this.setState({
+                dateFlag: 3
+            });
+        }
+    }
+
+
+    componentWillMount() {
+        this.fetchUrlParams();
+    }
 
     startTest() {
         this.setState({
@@ -62,30 +112,32 @@ class datePicker extends React.Component {
     }
 
     render() {
-
         if (this.state.counter == 1) {
-            return (<FetchQuestion />)
+            return (<FetchQuestion Cid={this.Cid} Sid={this.Sid}/>)
         }
-        if (this.date == this.arrayDate) {
-
-            return (<div>
-
-                <Instructions startTest={this.startTest} />
+        if (this.state.dateFlag == 0) {
+            return (<div align="center">
+                <h1>Your date has not arrived yet</h1>
             </div>)
         }
-        else if (this.date <= this.arrayDate) {
+        else if (this.state.dateFlag == 2) {
             return (
                 <div align="Center">
-                    <p>Your Date has not arrived yet!</p>
+                    <h1>Your time has either not arrived or you missed your exam</h1>
                 </div>
             );
         }
-        else {
+        else if (this.state.dateFlag == 3) {
             return (<div align="Center">
-                <p>Your exam date has passed!</p>
+                <Instructions startTest={this.startTest} />
             </div>);
         }
-    };
-}
+        else {
+            return (
+                <div></div>
+            )
+        }
+    }
+};
 
 export default datePicker

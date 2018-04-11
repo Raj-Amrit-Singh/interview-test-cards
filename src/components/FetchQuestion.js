@@ -61,7 +61,7 @@ export class FetchQuestion extends React.Component {
     else {
       return (
         <div>
-          <Questions Data={this.state.questionSet} />
+          <Questions Data={this.state.questionSet} Sid={props.Sid} Cid={props.Cid}/>
         </div>
       )
     }

@@ -20,7 +20,7 @@ export class Questions extends React.Component {
     this.postResult = this.postResult.bind(this);
     this.state = {
       Qbank_Check: props.Data,
-      counter: null,
+      counter: 0,
     }
   }
 
@@ -58,12 +58,13 @@ export class Questions extends React.Component {
   }
 
   postResult() {
+    console.log(this.Sid)
     fetch("https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/ResultRestHandler",
       {
         headers: {
           'Authorization': 'Bearer '+this.Sid,
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'http://localhost:9000'
+          'Access-Control-Allow-Origin': 'https://trailrecruitment01-dev-ed--c.ap5.visual.force.com'
         },
         method: "POST",
         body: JSON.stringify({ CandidateId : this.Cid,result: this.state.counter })

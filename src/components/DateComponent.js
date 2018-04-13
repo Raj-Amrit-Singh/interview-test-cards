@@ -32,22 +32,47 @@ class datePicker extends React.Component {
         const parsedURL = queryString.parseUrl(location.href);
         this.Cid = parsedURL.query.Cid;
         this.Sid = parsedURL.query.Sid;
-        let scheduleApi = `https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/CandidateScheduleRestHandler/${this.Cid}`;
-        let that = this;
-        let xhttp = new XMLHttpRequest();
-        let token = this.Sid;
-        let jsonObject;
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                that.setState({
-                    candidateSchedule: JSON.parse(this.responseText)
+        let newCid = this.Cid.substr(0, 15);
+        //let newCid = this.Cid.split(this.Cid[15])[0];
+        console.log("this is " + newCid);
+        console.log("this is token"+this.Sid)
+        let scheduleApi = `https://trailrecruitment01-dev-ed.my.salesforce.com/services/apexrest/CandidateScheduleRestHandler/${newCid}`;
+/*
+        fetch(scheduleApi,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + this.Sid,
+                    'Access-Control-Allow-Origin': '*'
+                },
+                method: "GET"
+            })
+            .then(schedule=>{
+                console.log(schedule);
+                schedule.json()
+            })
+            .then(getSchedule=>{
+                this.setState({
+                    candidateSchedule : getSchedule
                 })
-                that.checkSchedule();
-            }
-        };
-        xhttp.open("GET", scheduleApi, true);
-        xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
-        xhttp.send();
+                console.log(getSchedule);
+            })
+    }*/
+    let that = this;
+    let xhttp = new XMLHttpRequest();
+    let token = this.Sid;
+    let jsonObject;
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            that.setState({
+                candidateSchedule: JSON.parse(this.responseText)
+            })
+            that.checkSchedule();
+        }
+    };
+    xhttp.open("GET", scheduleApi, true);
+    xhttp.setRequestHeader('Authorization', 'Bearer ' + token);
+    xhttp.setRequestHeader('Access-Control-Allow-Origin','https://trailrecruitment01-dev-ed--c.ap5.visual.force.com');
+    xhttp.send();
     }
 
     checkSchedule() {
@@ -110,7 +135,7 @@ class datePicker extends React.Component {
 
     render() {
         if (this.state.counter == 1) {
-            return (<FetchQuestion Cid={this.Cid} Sid={this.Sid}/>)
+            return (<FetchQuestion Cid={this.Cid} Sid={this.Sid} />)
         }
         if (this.state.dateFlag == 0) {
             return (<div align="center">
